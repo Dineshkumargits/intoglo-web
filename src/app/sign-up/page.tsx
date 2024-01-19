@@ -1,25 +1,22 @@
-import * as React from "react";
-import Sheet from "@mui/joy/Sheet";
-import Typography from "@mui/joy/Typography";
-import FormControl from "@mui/joy/FormControl";
-import FormLabel from "@mui/joy/FormLabel";
-import Input from "@mui/joy/Input";
-import Button from "@mui/joy/Button";
-import Link from "@mui/joy/Link";
-import { SignUp } from "@clerk/nextjs";
-
+"use client";
+import { useRouter } from "next/navigation";
+import { useEffect } from "react";
+import { SignUp } from "../components/auth/Signup";
+import { getAuthenticatedUser } from "../lib/common";
 export default function SignUpPage() {
+  const router = useRouter();
+  const redirectIfAuthenticated = async () => {
+    const isUserAuthenticated = await getAuthenticatedUser();
+    if (isUserAuthenticated?.authenticated) {
+      router.replace("/");
+    }
+  };
+  useEffect(() => {
+    redirectIfAuthenticated();
+  }, []);
   return (
-    <Sheet
-      sx={{
-        display: "flex",
-        flexFlow: "row nowrap",
-        justifyContent: "center",
-        alignItems: "center",
-        minHeight: "100vh",
-      }}
-    >
+    <>
       <SignUp />
-    </Sheet>
+    </>
   );
 }
