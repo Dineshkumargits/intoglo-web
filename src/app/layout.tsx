@@ -1,6 +1,11 @@
-import * as React from "react";
 import ThemeRegistry from "@/components/ThemeRegistry/ThemeRegistry";
-import { ClerkProvider } from "@clerk/nextjs";
+import { Box, IconButton, Typography } from "@mui/joy";
+import * as React from "react";
+import { Toaster } from "sonner";
+import { Provider } from "./components/Provider";
+import BaseLayout from "./components/layouts/BaseLayout";
+import { ProfileMenu } from "./components/layouts/ProfileMenu";
+import { APP_NAME } from "./utils/constants";
 
 export const metadata = {
   title: "Create Next App",
@@ -10,12 +15,47 @@ export const metadata = {
 export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   return (
-    <ClerkProvider>
+    <Provider>
       <html lang="en">
         <body>
-          <ThemeRegistry>{children}</ThemeRegistry>
+          <Toaster richColors position="top-right" />
+          <ThemeRegistry>
+            <BaseLayout.Header>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  gap: 1.5,
+                }}
+              >
+                <IconButton
+                  size="sm"
+                  variant="outlined"
+                  sx={{ display: { xs: "none", sm: "inline-flex" } }}
+                >
+                  {/* <GroupRoundedIcon /> */}
+                  <img src="/icon.png" width={32} />
+                </IconButton>
+                <Typography component="h1" fontWeight="xl">
+                  {APP_NAME}
+                </Typography>
+              </Box>
+              <Box
+                sx={{
+                  display: "flex",
+                  flexDirection: "row",
+                  gap: 1.5,
+                  alignItems: "center",
+                }}
+              >
+                <ProfileMenu />
+              </Box>
+            </BaseLayout.Header>
+            <BaseLayout.Main>{children}</BaseLayout.Main>
+          </ThemeRegistry>
         </body>
       </html>
-    </ClerkProvider>
+    </Provider>
   );
 }
