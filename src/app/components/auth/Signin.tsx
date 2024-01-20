@@ -45,7 +45,7 @@ export function SignIn() {
           token: response?.data?.data?.token,
           user: response?.data?.data?.user?.user_id,
         });
-        router.push("/");
+        router.replace("/");
       })
       .catch((error) => {
         toast.error(
