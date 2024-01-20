@@ -84,6 +84,7 @@ export const DocComponent = () => {
         onClose={() => {
           setFilePickerOpen(false);
         }}
+        refresh={fetchDocuments}
       />
     </Stack>
   );
@@ -100,6 +101,7 @@ const DocumentItem = ({
 }) => {
   const [editOpen, setEditOpen] = useState(false);
   const [openImageView, setOpenImageView] = useState(false);
+  const [openPdf, setOpenPdf] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const onDelete = async () => {
     // return deleteRequest({
@@ -115,6 +117,7 @@ const DocumentItem = ({
     if (doc.type?.startsWith("image")) {
       setOpenImageView(true);
     } else if (doc?.type == "application/pdf") {
+      setOpenPdf(true);
     } else {
       // open url in new tab
     }
@@ -188,6 +191,16 @@ const DocumentItem = ({
           />
         </Portal>
       )}
+      <UIModal
+        open={openPdf}
+        onClose={(e: any) => {
+          e.stopPropagation();
+          setOpenPdf(false);
+        }}
+        dialogSx={{ width: "100%", height: "100%" }}
+      >
+        <iframe src={doc.s3_url} width="100%" height="100%" />
+      </UIModal>
     </ListItem>
   );
 };
