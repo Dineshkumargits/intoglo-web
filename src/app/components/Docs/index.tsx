@@ -10,6 +10,7 @@ import { useEffect, useState } from "react";
 import { UIButton } from "../UIButton";
 import { CreateDocBoxModal } from "./CreateDocBoxModal";
 import ComponentWithLoader from "../ComponentWithLoader";
+import { EditDocBoxModal } from "./EditDocBoxModal";
 
 export function DocsComponent() {
   const [docs, setDocs] = useState<Documents[]>([]);
@@ -21,8 +22,8 @@ export function DocsComponent() {
   const fetchDocs = async (currentParentId = 0) => {
     get({ url: `${API_ROUTES.LIST_DOCS}/${currentParentId}` })
       .then((response) => {
-        if (response?.data?.data?.documents) {
-          setDocs(response?.data?.data?.documents);
+        if (response?.data) {
+          setDocs(response?.data);
         }
       })
       .finally(() => {
@@ -50,11 +51,11 @@ export function DocsComponent() {
           }}
         >
           {docs?.map((doc) => {
-            return <DocItem doc={doc} onClick={() => {}} />;
+            return <DocItem doc={doc} onClick={() => {}} onEdit={fetchDocs} />;
           })}
         </List>
       </ComponentWithLoader>
-      {docs?.length == 0 && (
+      {docs?.length == 0 && !loading && (
         <Stack alignItems={"center"}>
           <Typography>No DocBox Found</Typography>
         </Stack>
@@ -73,7 +74,16 @@ export function DocsComponent() {
   );
 }
 
-const DocItem = ({ doc, onClick }: { doc: Documents; onClick: () => void }) => {
+const DocItem = ({
+  doc,
+  onClick,
+  onEdit,
+}: {
+  doc: Documents;
+  onClick: () => void;
+  onEdit: () => void;
+}) => {
+  const [editOpen, setEditOpen] = useState(false);
   return (
     <ListItem sx={{}} onClick={onClick}>
       <Card
@@ -91,6 +101,7 @@ const DocItem = ({ doc, onClick }: { doc: Documents; onClick: () => void }) => {
               size="sm"
               onClick={(e) => {
                 e.stopPropagation();
+                setEditOpen(true);
               }}
             >
               <Edit />
@@ -105,6 +116,14 @@ const DocItem = ({ doc, onClick }: { doc: Documents; onClick: () => void }) => {
               <Delete />
             </IconButton>
           </Stack>
+          <EditDocBoxModal
+            open={editOpen}
+            onClose={() => {
+              setEditOpen(false);
+            }}
+            document={doc}
+            onEdit={onEdit}
+          />
         </Stack>
       </Card>
     </ListItem>
