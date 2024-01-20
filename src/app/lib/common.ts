@@ -30,8 +30,7 @@ export const getUserName = (first_name: string, last_name: string) => {
 
 export const getProfileName = (name: string) => {
   const nameArr = name?.split(" ");
-  return (
-    nameArr?.[0]?.charAt(0)?.toUpperCase() +
-    nameArr?.[1]?.charAt(0)?.toUpperCase()
-  );
+  return `${nameArr?.[0]?.charAt(0)?.toUpperCase()} ${
+    nameArr?.[1]?.charAt(0)?.toUpperCase() || ""
+  }`;
 };
