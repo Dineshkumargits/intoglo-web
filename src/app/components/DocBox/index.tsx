@@ -105,7 +105,7 @@ const DocItem = ({
     });
   };
   return (
-    <Link href={`/doc/${doc.document_id}`} style={{ textDecoration: "none" }}>
+    <Link href={`/doc/${doc.doc_box_id}`} style={{ textDecoration: "none" }}>
       <ListItem sx={{}} onClick={onClick}>
         <Card
           sx={{
@@ -122,6 +122,7 @@ const DocItem = ({
                 size="sm"
                 onClick={(e) => {
                   e.stopPropagation();
+                  e.preventDefault();
                   setEditOpen(true);
                 }}
               >
@@ -132,6 +133,7 @@ const DocItem = ({
                 color="danger"
                 onClick={(e) => {
                   e.stopPropagation();
+                  e.preventDefault();
                   setConfirmOpen(true);
                 }}
               >

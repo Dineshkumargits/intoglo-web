@@ -29,7 +29,7 @@ export const DocComponent = () => {
     fetchDocuments();
   }, []);
   const fetchDocuments = async () => {
-    if (!isNaN(Number(params?.doc_id))) {
+    if (params?.doc_id) {
       get({ url: `${API_ROUTES.LIST_DOCUMENTS}/${params?.doc_id}` })
         .then((response) => {
           if (response?.data) {
@@ -76,7 +76,7 @@ export const DocComponent = () => {
       </ComponentWithLoader>
       {documents?.length == 0 && !loading && (
         <Stack alignItems={"center"}>
-          <Typography>No DocBox Found</Typography>
+          <Typography>No Documents Found</Typography>
         </Stack>
       )}
       <DocumentUploadModal

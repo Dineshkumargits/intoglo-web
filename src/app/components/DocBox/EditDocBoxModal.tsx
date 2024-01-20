@@ -22,7 +22,7 @@ export const EditDocBoxModal = (props: Props) => {
     if (props?.open) {
       fetchClients();
       setSelectedClients(
-        props?.document?.DocumentPermissions?.map((d) => d.Users[0])
+        props?.document?.DocumentPermissions?.map((d) => d.Users[0]) || []
       );
     }
   }, [props?.open]);

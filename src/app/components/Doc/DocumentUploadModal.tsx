@@ -23,7 +23,7 @@ export const DocumentUploadModal = (props: Props) => {
             let f: Documents = {
               name: file.file.name,
               is_doc_box: false,
-              parent_document: Number(params.doc_id),
+              parent_document: String(params.doc_id),
               s3_url: data.fileUrl,
               size: file.file.size,
               type: file.file.type,

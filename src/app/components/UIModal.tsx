@@ -34,13 +34,14 @@ export function UIModal(props: Props) {
   return (
     <Modal
       open={open}
-      onClose={(event, reason) => {
+      onClose={(event: any, reason) => {
         if (
           singleClose &&
           ["escapeKeyDown", "backdropClick"].includes(reason)
         ) {
           return;
         }
+        event.stopPropagation();
         onClose(event, reason);
       }}
       disableEscapeKeyDown={props?.disableEscapeKeyDown}
@@ -60,6 +61,9 @@ export function UIModal(props: Props) {
               }),
           px: 0,
           ...dialogSx,
+        }}
+        onClick={(e) => {
+          e.stopPropagation();
         }}
       >
         {!hideClose && <ModalClose />}
