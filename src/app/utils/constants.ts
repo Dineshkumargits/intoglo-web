@@ -16,6 +16,7 @@ export const APP_ROUTES = {
   SIGN_IN: "/sign-in",
   HOME: "/",
   DOCS: "/docs",
+  DOCBOX: "/docbox",
 };
 
 export const APP_NAME = process.env.NEXT_PUBLIC_APPNAME || "";
