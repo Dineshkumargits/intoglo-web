@@ -14,7 +14,7 @@ import { EditDocBoxModal } from "./EditDocBoxModal";
 import { UIModal, UIModalActionArea } from "../UIModal";
 import { toast } from "sonner";
 
-export function DocsComponent() {
+export function DocBoxComponent() {
   const [docs, setDocs] = useState<Documents[]>([]);
   const [loading, setLoading] = useState(true);
   const [createModelOpen, setCreateModelOpen] = useState(false);
