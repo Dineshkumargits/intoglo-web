@@ -61,7 +61,9 @@ export const ProfileMenu = () => {
               onClick={handleClick}
               style={{ cursor: "pointer" }}
             >
-              {getProfileName(getUserName(user?.first_name, user?.last_name))}
+              {getProfileName(
+                getUserName(user?.first_name || "", user?.last_name || "")
+              )}
             </Avatar>
             <Menu
               id="profile_menu_id"
