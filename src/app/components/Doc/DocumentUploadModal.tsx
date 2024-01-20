@@ -10,6 +10,7 @@ import { toast } from "sonner";
 type Props = {
   open: boolean;
   onClose: () => void;
+  refresh: () => void;
 };
 export const DocumentUploadModal = (props: Props) => {
   const params = useParams();
@@ -39,6 +40,7 @@ export const DocumentUploadModal = (props: Props) => {
           .then(() => {
             toast.success("Document(s) uploaded");
             props?.onClose();
+            props?.refresh();
           })
           .finally(() => {
             resolve("");

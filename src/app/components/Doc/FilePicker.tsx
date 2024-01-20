@@ -11,8 +11,8 @@ import {
   Typography,
 } from "@mui/joy";
 import { Slide } from "@mui/material";
-import { useEffect, useState } from "react";
-import Dropzone, { ErrorCode, FileRejection } from "react-dropzone";
+import { useState } from "react";
+import Dropzone, { FileRejection } from "react-dropzone";
 import { UIPromiseButton } from "../UIButton";
 export type FileType = { file: File; key: string };
 export const ONE_MB_IN_BYTES = 1048576;
@@ -62,7 +62,7 @@ export const FilePicker = (props: Props) => {
   return (
     <Box>
       <Dropzone
-        accept={{ "image/*": [".jpeg", ".png"] }}
+        // accept={{ "image/*": [".jpeg", ".png"] }}
         onDrop={(acceptedFiles, rejectedFiles) => {
           setFileRejections([]);
           setFileRejections([...rejectedFiles]);
@@ -209,12 +209,32 @@ const Preview = (props: PreviewProps) => {
               height: "inherit",
             }}
           >
-            <img
-              src={URL.createObjectURL(props?.file?.file)}
-              width={80}
-              height={80}
-              style={{ objectFit: "cover" }}
-            />
+            {props?.file?.file?.type?.startsWith("image") ? (
+              <img
+                src={URL.createObjectURL(props?.file?.file)}
+                width={80}
+                height={80}
+                style={{ objectFit: "cover" }}
+              />
+            ) : (
+              <>
+                {props?.file?.file?.type == "application/pdf" ? (
+                  <img
+                    src="/pdf_thumbnail.png"
+                    width={80}
+                    height={80}
+                    style={{ objectFit: "cover" }}
+                  />
+                ) : (
+                  <img
+                    src="/document_thumbnail.png"
+                    width={80}
+                    height={80}
+                    style={{ objectFit: "cover" }}
+                  />
+                )}
+              </>
+            )}
           </span>
           <IconButton
             size="sm"
