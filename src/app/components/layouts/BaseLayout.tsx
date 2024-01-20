@@ -7,15 +7,10 @@ const Root = (props: BoxProps) => (
     {...props}
     sx={[
       {
-        bgcolor: "background.appBody",
-        display: "grid",
-        gridTemplateColumns: {
-          // xs: "1fr",
-          sm: "minmax(64px, 200px) minmax(450px, 1fr)",
-          md: "minmax(260px, 300px) minmax(500px, 1fr)",
-        },
-        gridTemplateRows: "64px 1fr",
-        minHeight: "100dvh",
+        minHeight: "100vh",
+        display: "flex",
+        flexDirection: "column",
+        width: "100%",
       },
       ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
     ]}
@@ -41,7 +36,7 @@ const Header = (props: BoxProps) => (
         borderColor: "divider",
         position: "sticky",
         top: 0,
-        zIndex: 1100,
+        // zIndex: 1100,
       },
       ...(Array.isArray(props.sx) ? props.sx : [props.sx]),
     ]}
