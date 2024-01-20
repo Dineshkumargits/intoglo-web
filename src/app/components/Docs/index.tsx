@@ -3,7 +3,7 @@
 import { get } from "@/app/api/api";
 import { Documents } from "@/app/types/documents";
 import { API_ROUTES } from "@/app/utils/constants";
-import { Add, Edit } from "@mui/icons-material";
+import { Add, Delete, Edit } from "@mui/icons-material";
 import { Card, IconButton, List, ListItem, Stack } from "@mui/joy";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useState } from "react";
@@ -86,14 +86,25 @@ const DocItem = ({ doc, onClick }: { doc: Documents; onClick: () => void }) => {
       >
         <Stack direction={"row"} justifyContent={"space-between"}>
           <Typography>{doc?.name}</Typography>
-          <IconButton
-            size="sm"
-            onClick={(e) => {
-              e.stopPropagation();
-            }}
-          >
-            <Edit />
-          </IconButton>
+          <Stack direction={"row"}>
+            <IconButton
+              size="sm"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <Edit />
+            </IconButton>
+            <IconButton
+              size="sm"
+              color="danger"
+              onClick={(e) => {
+                e.stopPropagation();
+              }}
+            >
+              <Delete />
+            </IconButton>
+          </Stack>
         </Stack>
       </Card>
     </ListItem>
