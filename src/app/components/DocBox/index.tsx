@@ -13,6 +13,7 @@ import ComponentWithLoader from "../ComponentWithLoader";
 import { EditDocBoxModal } from "./EditDocBoxModal";
 import { UIModal, UIModalActionArea } from "../UIModal";
 import { toast } from "sonner";
+import Link from "next/link";
 
 export function DocBoxComponent() {
   const [docs, setDocs] = useState<Documents[]>([]);
@@ -53,7 +54,14 @@ export function DocBoxComponent() {
           }}
         >
           {docs?.map((doc) => {
-            return <DocItem doc={doc} onClick={() => {}} refresh={fetchDocs} />;
+            return (
+              <DocItem
+                key={doc.document_id}
+                doc={doc}
+                onClick={() => {}}
+                refresh={fetchDocs}
+              />
+            );
           })}
         </List>
       </ComponentWithLoader>
@@ -97,64 +105,68 @@ const DocItem = ({
     });
   };
   return (
-    <ListItem sx={{}} onClick={onClick}>
-      <Card
-        sx={{
-          "&:hover": { boxShadow: "md" },
-          borderRadius: "sm",
-          width: "100%",
-          cursor: "pointer",
-        }}
-      >
-        <Stack direction={"row"} justifyContent={"space-between"}>
-          <Typography>{doc?.name}</Typography>
-          <Stack direction={"row"}>
-            <IconButton
-              size="sm"
-              onClick={(e) => {
-                e.stopPropagation();
-                setEditOpen(true);
+    <Link href={`/doc/${doc.document_id}`} style={{ textDecoration: "none" }}>
+      <ListItem sx={{}} onClick={onClick}>
+        <Card
+          sx={{
+            "&:hover": { boxShadow: "md" },
+            borderRadius: "sm",
+            width: "100%",
+            cursor: "pointer",
+          }}
+        >
+          <Stack direction={"row"} justifyContent={"space-between"}>
+            <Typography>{doc?.name}</Typography>
+            <Stack direction={"row"}>
+              <IconButton
+                size="sm"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setEditOpen(true);
+                }}
+              >
+                <Edit />
+              </IconButton>
+              <IconButton
+                size="sm"
+                color="danger"
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setConfirmOpen(true);
+                }}
+              >
+                <Delete />
+              </IconButton>
+            </Stack>
+            <EditDocBoxModal
+              open={editOpen}
+              onClose={() => {
+                setEditOpen(false);
               }}
-            >
-              <Edit />
-            </IconButton>
-            <IconButton
-              size="sm"
-              color="danger"
-              onClick={(e) => {
-                e.stopPropagation();
-                setConfirmOpen(true);
+              document={doc}
+              onEdit={refresh}
+            />
+            <UIModal
+              open={confirmOpen}
+              onClose={() => {
+                setConfirmOpen(false);
               }}
+              actions={
+                <UIModalActionArea>
+                  <UIPromiseButton color="danger" onClick={onDelete}>
+                    Delete
+                  </UIPromiseButton>
+                </UIModalActionArea>
+              }
+              dialogSx={{ width: { xs: "90%", sm: "30%" } }}
             >
-              <Delete />
-            </IconButton>
+              <Typography>
+                Are you sure you want to delete this docbox
+              </Typography>
+            </UIModal>
           </Stack>
-          <EditDocBoxModal
-            open={editOpen}
-            onClose={() => {
-              setEditOpen(false);
-            }}
-            document={doc}
-            onEdit={refresh}
-          />
-          <UIModal
-            open={confirmOpen}
-            onClose={() => {
-              setConfirmOpen(false);
-            }}
-            actions={
-              <UIModalActionArea>
-                <UIPromiseButton color="danger" onClick={onDelete}>
-                  Delete
-                </UIPromiseButton>
-              </UIModalActionArea>
-            }
-            dialogSx={{ width: { xs: "90%", sm: "30%" } }}
-          >
-            <Typography>Are you sure you want to delete this docbox</Typography>
-          </UIModal>
-        </Stack>
-      </Card>
-    </ListItem>
+        </Card>
+      </ListItem>
+    </Link>
   );
 };
