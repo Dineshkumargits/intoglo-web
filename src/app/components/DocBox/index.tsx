@@ -15,6 +15,7 @@ import { UIModal, UIModalActionArea } from "../UIModal";
 import { toast } from "sonner";
 import Link from "next/link";
 import { useUser } from "@/app/lib/customHooks";
+import moment from "moment";
 
 export function DocBoxComponent() {
   const [docs, setDocs] = useState<Documents[]>([]);
@@ -124,7 +125,10 @@ const DocItem = ({
         >
           <Stack direction={"row"} justifyContent={"space-between"}>
             <Typography>{doc?.name}</Typography>
-            <Stack direction={"row"}>
+            <Stack direction={"row"} alignItems={"center"} spacing={2}>
+              <Typography>
+                {moment(doc?.createdAt).format("MMM DD, YYYY")}
+              </Typography>
               <IconButton
                 size="sm"
                 onClick={(e) => {

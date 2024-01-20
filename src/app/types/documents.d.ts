@@ -11,6 +11,8 @@ export interface Documents {
   type?: string;
   size?: number;
   DocumentPermissions?: DocumentPermissions[];
+  createdAt?: Date;
+  updatedAt?: Date;
 }
 
 export interface DocumentPermissions {

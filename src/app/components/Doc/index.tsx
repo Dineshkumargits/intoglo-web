@@ -20,6 +20,7 @@ import { DocumentUploadModal } from "./DocumentUploadModal";
 import { Portal } from "@mui/material";
 import { Lightbox } from "react-modal-image";
 import Link from "next/link";
+import moment from "moment";
 
 export const DocComponent = () => {
   const params = useParams();
@@ -159,7 +160,10 @@ const DocumentItem = ({
             />
             <Typography fontWeight={"lg"}>{doc?.name}</Typography>
           </Stack>
-          <Stack direction={"row"}>
+          <Stack direction={"row"} alignItems={"center"} spacing={2}>
+            <Typography>
+              {moment(doc?.createdAt).format("MMM DD, YYYY")}
+            </Typography>
             <IconButton
               size="sm"
               color="danger"
