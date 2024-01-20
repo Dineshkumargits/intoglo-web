@@ -1,16 +1,18 @@
 "use client";
 
-import { get } from "@/app/api/api";
+import { deleteRequest, get } from "@/app/api/api";
 import { Documents } from "@/app/types/documents";
 import { API_ROUTES } from "@/app/utils/constants";
 import { Add, Delete, Edit } from "@mui/icons-material";
 import { Card, IconButton, List, ListItem, Stack } from "@mui/joy";
 import Typography from "@mui/joy/Typography";
 import { useEffect, useState } from "react";
-import { UIButton } from "../UIButton";
+import { UIButton, UIPromiseButton } from "../UIButton";
 import { CreateDocBoxModal } from "./CreateDocBoxModal";
 import ComponentWithLoader from "../ComponentWithLoader";
 import { EditDocBoxModal } from "./EditDocBoxModal";
+import { UIModal, UIModalActionArea } from "../UIModal";
+import { toast } from "sonner";
 
 export function DocsComponent() {
   const [docs, setDocs] = useState<Documents[]>([]);
@@ -51,7 +53,7 @@ export function DocsComponent() {
           }}
         >
           {docs?.map((doc) => {
-            return <DocItem doc={doc} onClick={() => {}} onEdit={fetchDocs} />;
+            return <DocItem doc={doc} onClick={() => {}} refresh={fetchDocs} />;
           })}
         </List>
       </ComponentWithLoader>
@@ -77,13 +79,23 @@ export function DocsComponent() {
 const DocItem = ({
   doc,
   onClick,
-  onEdit,
+  refresh,
 }: {
   doc: Documents;
   onClick: () => void;
-  onEdit: () => void;
+  refresh: () => void;
 }) => {
   const [editOpen, setEditOpen] = useState(false);
+  const [confirmOpen, setConfirmOpen] = useState(false);
+  const onDelete = async () => {
+    return deleteRequest({
+      url: `${API_ROUTES.DELETE_DOC_BOX}/${doc.document_id}`,
+    }).then(() => {
+      toast.success("Docbox deleted");
+      refresh();
+      setConfirmOpen(false);
+    });
+  };
   return (
     <ListItem sx={{}} onClick={onClick}>
       <Card
@@ -111,6 +123,7 @@ const DocItem = ({
               color="danger"
               onClick={(e) => {
                 e.stopPropagation();
+                setConfirmOpen(true);
               }}
             >
               <Delete />
@@ -122,8 +135,24 @@ const DocItem = ({
               setEditOpen(false);
             }}
             document={doc}
-            onEdit={onEdit}
+            onEdit={refresh}
           />
+          <UIModal
+            open={confirmOpen}
+            onClose={() => {
+              setConfirmOpen(false);
+            }}
+            actions={
+              <UIModalActionArea>
+                <UIPromiseButton color="danger" onClick={onDelete}>
+                  Delete
+                </UIPromiseButton>
+              </UIModalActionArea>
+            }
+            dialogSx={{ width: { xs: "90%", sm: "30%" } }}
+          >
+            <Typography>Are you sure you want to delete this docbox</Typography>
+          </UIModal>
         </Stack>
       </Card>
     </ListItem>
