@@ -2,10 +2,11 @@ import { get, post } from "@/app/api/api";
 import { User } from "@/app/types/authentication";
 import { Documents } from "@/app/types/documents";
 import { API_ROUTES } from "@/app/utils/constants";
-import { Autocomplete, FormControl, FormLabel, Input, Stack } from "@mui/joy";
+import { FormControl, FormLabel, Input, Stack } from "@mui/joy";
 import { useEffect, useState } from "react";
 import { UIPromiseButton } from "../UIButton";
 import { UIModal, UIModalActionArea } from "../UIModal";
+import { ClientSelection } from "./ClientSelection";
 
 type Props = {
   open: boolean;
@@ -59,23 +60,13 @@ export const CreateDocBoxModal = (props: Props) => {
           <FormLabel>DocBox Name</FormLabel>
           <Input value={getDocName()} />
         </FormControl>
-        <FormControl id="multiple-limit-tags">
-          <FormLabel>Access to</FormLabel>
-          <Autocomplete
-            multiple
-            placeholder="Select Users"
-            limitTags={2}
-            options={clients || []}
-            getOptionLabel={(option) =>
-              `${option.first_name} ${option.last_name || ""}`
-            }
-            defaultValue={selectedClients}
-            value={selectedClients}
-            onChange={(e, value) => {
-              setSelectedClients(value);
-            }}
-          />
-        </FormControl>
+        <ClientSelection
+          options={clients}
+          selectedOptions={selectedClients}
+          onChange={(value) => {
+            setSelectedClients(value);
+          }}
+        />
       </Stack>
     </UIModal>
   );
