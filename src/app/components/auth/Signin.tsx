@@ -132,7 +132,7 @@ export function SignIn() {
           </Stack>
         </form>
         <Typography
-          endDecorator={<Link href="/sign-in">Register</Link>}
+          endDecorator={<Link href="/sign-up">Register</Link>}
           fontSize="sm"
           sx={{ alignSelf: "center" }}
         >
