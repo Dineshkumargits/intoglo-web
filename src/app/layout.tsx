@@ -5,7 +5,8 @@ import { Toaster } from "sonner";
 import { Provider } from "./components/Provider";
 import BaseLayout from "./components/layouts/BaseLayout";
 import { ProfileMenu } from "./components/layouts/ProfileMenu";
-import { APP_NAME } from "./utils/constants";
+import { APP_NAME, BODY_BACKGROUND } from "./utils/constants";
+import { SxProps } from "@mui/joy/styles/types";
 
 export const metadata = {
   title: "Create Next App",
@@ -20,39 +21,47 @@ export default function RootLayout(props: { children: React.ReactNode }) {
         <body>
           <Toaster richColors position="top-right" />
           <ThemeRegistry>
-            <BaseLayout.Header>
-              <Box
+            <BaseLayout.Root>
+              <BaseLayout.Header
                 sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  gap: 1.5,
+                  bgcolor: { xs: BODY_BACKGROUND, lg: "unset" },
+                  borderBottom: "0px",
                 }}
               >
-                <IconButton
-                  size="sm"
-                  variant="outlined"
-                  sx={{ display: { xs: "none", sm: "inline-flex" } }}
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    gap: 1.5,
+                  }}
                 >
-                  {/* <GroupRoundedIcon /> */}
-                  <img src="/icon.png" width={32} />
-                </IconButton>
-                <Typography component="h1" fontWeight="xl">
-                  {APP_NAME}
-                </Typography>
-              </Box>
-              <Box
+                  <Typography component="h1" fontWeight="xl">
+                    {APP_NAME}
+                  </Typography>
+                </Box>
+                <Box
+                  sx={{
+                    display: "flex",
+                    flexDirection: "row",
+                    gap: 1.5,
+                    alignItems: "center",
+                  }}
+                >
+                  <ProfileMenu />
+                </Box>
+              </BaseLayout.Header>
+              <BaseLayout.Main
                 sx={{
-                  display: "flex",
-                  flexDirection: "row",
-                  gap: 1.5,
-                  alignItems: "center",
+                  maxWidth: 1300,
+                  margin: "auto",
+                  width: { xs: "90%", xl: "100%" },
+                  flexGrow: 1,
                 }}
               >
-                <ProfileMenu />
-              </Box>
-            </BaseLayout.Header>
-            <BaseLayout.Main>{children}</BaseLayout.Main>
+                {children}
+              </BaseLayout.Main>
+            </BaseLayout.Root>
           </ThemeRegistry>
         </body>
       </html>
