@@ -59,4 +59,27 @@ const post = ({ url, body }: ApiArgs): Promise<AxiosResponse<any, any>> => {
   });
 };
 
-export { get, post };
+const deleteRequest = ({ url }: ApiArgs): Promise<AxiosResponse<any, any>> => {
+  return new Promise((resolve, reject) => {
+    const token = getToken();
+    axios
+      .delete(url, {
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
+      .then((response) => {
+        resolve(response);
+      })
+      .catch((error) => {
+        toast.error(
+          error?.response?.data?.message ||
+            error?.message ||
+            "Something went wrong. Try again"
+        );
+        reject(error);
+      });
+  });
+};
+
+export { get, post, deleteRequest };
