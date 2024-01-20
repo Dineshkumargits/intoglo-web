@@ -14,7 +14,7 @@ export default function Home() {
       }}
     >
       <Typography level="h4">Welcome to IntoDocs</Typography>
-      <Link href={APP_ROUTES.DOCS}>
+      <Link href={APP_ROUTES.DOCBOX}>
         <Button>View Docs</Button>
       </Link>
     </Stack>
