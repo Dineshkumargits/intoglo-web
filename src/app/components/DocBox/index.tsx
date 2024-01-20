@@ -14,11 +14,13 @@ import { EditDocBoxModal } from "./EditDocBoxModal";
 import { UIModal, UIModalActionArea } from "../UIModal";
 import { toast } from "sonner";
 import Link from "next/link";
+import { useUser } from "@/app/lib/customHooks";
 
 export function DocBoxComponent() {
   const [docs, setDocs] = useState<Documents[]>([]);
   const [loading, setLoading] = useState(true);
   const [createModelOpen, setCreateModelOpen] = useState(false);
+  const { user } = useUser();
   useEffect(() => {
     fetchDocs();
   }, []);
@@ -38,14 +40,16 @@ export function DocBoxComponent() {
     <Stack spacing={2} sx={{}}>
       <Stack direction={"row"} justifyContent={"space-between"}>
         <Typography level="h3">Doc Boxes</Typography>
-        <UIButton
-          startDecorator={<Add />}
-          onClick={() => {
-            setCreateModelOpen(true);
-          }}
-        >
-          Create DocBox
-        </UIButton>
+        {user?.user_role_id == 1 && (
+          <UIButton
+            startDecorator={<Add />}
+            onClick={() => {
+              setCreateModelOpen(true);
+            }}
+          >
+            Create DocBox
+          </UIButton>
+        )}
       </Stack>
       <ComponentWithLoader loading={loading}>
         <List
