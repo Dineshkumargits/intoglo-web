@@ -13,13 +13,15 @@ import {
 import { Slide } from "@mui/material";
 import { useEffect, useState } from "react";
 import Dropzone, { ErrorCode, FileRejection } from "react-dropzone";
-type FileType = { file: File; key: string };
+import { UIPromiseButton } from "../UIButton";
+export type FileType = { file: File; key: string };
 export const ONE_MB_IN_BYTES = 1048576;
 type Props = {
   files?: FileType[];
   onChangeFiles?: (files: FileType[]) => void;
   maxFileSize?: number;
   maxFiles?: number;
+  onUpload: (files: FileType[]) => Promise<unknown>;
 };
 export const FilePicker = (props: Props) => {
   const [files, setFiles] = useState<FileType[]>([]);
@@ -159,7 +161,14 @@ export const FilePicker = (props: Props) => {
               >
                 Remove all
               </Button>
-              <Button size="sm">Upload</Button>
+              <UIPromiseButton
+                size="sm"
+                onClick={() => {
+                  return props?.onUpload(files);
+                }}
+              >
+                Upload
+              </UIPromiseButton>
             </Stack>
           )}
         </Box>

@@ -1,13 +1,15 @@
 import { User } from "./authentication";
 
 export interface Documents {
-  document_id: number;
+  document_id?: number;
   s3_url?: string;
   is_doc_box?: boolean;
   parent_document?: number;
   user_id?: number;
   name: string;
-  DocumentPermissions: DocumentPermissions[];
+  type?: string;
+  size?: number;
+  DocumentPermissions?: DocumentPermissions[];
 }
 
 export interface DocumentPermissions {

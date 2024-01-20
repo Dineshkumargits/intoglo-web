@@ -8,6 +8,7 @@ export const API_ROUTES = {
   CREATE_DOC_BOX: host_url + "/api/documents/create_doc_box",
   UPDATE_DOC_BOX: host_url + "/api/documents/update_doc_box",
   DELETE_DOC_BOX: host_url + "/api/documents/delete_doc_box",
+  UPLOAD_DOCS: host_url + "/api/documents/upload_documents",
   GET_ALL_CLIENTS: host_url + "/api/get_all_clients",
 };
 
