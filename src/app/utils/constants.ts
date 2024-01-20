@@ -5,6 +5,7 @@ export const API_ROUTES = {
   SIGN_OUT: host_url + "/api/auth/signout",
   GET_USER: host_url + "/api/auth/getuser",
   LIST_DOCS: host_url + "/api/documents/list_doc_box",
+  LIST_DOCUMENTS: host_url + "/api/documents/list_documents",
   CREATE_DOC_BOX: host_url + "/api/documents/create_doc_box",
   UPDATE_DOC_BOX: host_url + "/api/documents/update_doc_box",
   DELETE_DOC_BOX: host_url + "/api/documents/delete_doc_box",
