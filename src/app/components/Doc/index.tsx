@@ -17,6 +17,8 @@ import ComponentWithLoader from "../ComponentWithLoader";
 import { UIButton, UIPromiseButton } from "../UIButton";
 import { UIModal, UIModalActionArea } from "../UIModal";
 import { DocumentUploadModal } from "./DocumentUploadModal";
+import { Portal } from "@mui/material";
+import { Lightbox } from "react-modal-image";
 
 export const DocComponent = () => {
   const params = useParams();
@@ -97,6 +99,7 @@ const DocumentItem = ({
   refresh: () => void;
 }) => {
   const [editOpen, setEditOpen] = useState(false);
+  const [openImageView, setOpenImageView] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const onDelete = async () => {
     // return deleteRequest({
@@ -107,8 +110,17 @@ const DocumentItem = ({
     //   setConfirmOpen(false);
     // });
   };
+  const onClickItem = () => {
+    console.log("open doc");
+    if (doc.type?.startsWith("image")) {
+      setOpenImageView(true);
+    } else if (doc?.type == "application/pdf") {
+    } else {
+      // open url in new tab
+    }
+  };
   return (
-    <ListItem sx={{}} onClick={onClick}>
+    <ListItem sx={{}} onClick={onClickItem}>
       <Card
         sx={{
           "&:hover": { boxShadow: "md" },
@@ -154,10 +166,28 @@ const DocumentItem = ({
             }
             dialogSx={{ width: { xs: "90%", sm: "30%" } }}
           >
-            <Typography>Are you sure you want to delete this docbox</Typography>
+            <Typography>
+              Are you sure you want to delete this document
+            </Typography>
           </UIModal>
         </Stack>
       </Card>
+      {openImageView && (
+        <Portal>
+          <Lightbox
+            medium={doc.s3_url}
+            large={doc.s3_url}
+            alt={doc?.name || ""}
+            onClose={(e: any) => {
+              if (e) {
+                e.stopPropagation();
+              }
+              setOpenImageView(false);
+            }}
+            hideZoom
+          />
+        </Portal>
+      )}
     </ListItem>
   );
 };
