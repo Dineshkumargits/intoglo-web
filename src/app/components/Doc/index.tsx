@@ -1,5 +1,5 @@
 "use client";
-import { get } from "@/app/api/api";
+import { deleteRequest, get } from "@/app/api/api";
 import { Documents } from "@/app/types/documents";
 import { API_ROUTES } from "@/app/utils/constants";
 import {
@@ -99,27 +99,26 @@ const DocumentItem = ({
   onClick: () => void;
   refresh: () => void;
 }) => {
-  const [editOpen, setEditOpen] = useState(false);
   const [openImageView, setOpenImageView] = useState(false);
   const [openPdf, setOpenPdf] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
-  const onDelete = async () => {
-    // return deleteRequest({
-    //   url: `${API_ROUTES.DELETE_DOC_BOX}/${doc.document_id}`,
-    // }).then(() => {
-    //   toast.success("Docbox deleted");
-    //   refresh();
-    //   setConfirmOpen(false);
-    // });
+  const onDelete = async (e: any) => {
+    e.stopPropagation();
+    return deleteRequest({
+      url: `${API_ROUTES.DELETE_DOCUMENT}/${doc.document_id}`,
+    }).then(() => {
+      toast.success("Document deleted");
+      refresh();
+      setConfirmOpen(false);
+    });
   };
   const onClickItem = () => {
-    console.log("open doc");
     if (doc.type?.startsWith("image")) {
       setOpenImageView(true);
     } else if (doc?.type == "application/pdf") {
       setOpenPdf(true);
     } else {
-      // open url in new tab
+      window.open(doc?.s3_url, "_blank");
     }
   };
   return (
