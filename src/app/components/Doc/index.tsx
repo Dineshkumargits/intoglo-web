@@ -8,9 +8,9 @@ import {
 } from "@/app/utils/icon_set";
 import { faFile } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { Delete, Upload } from "@mui/icons-material";
+import { ArrowBackIos, Delete, Upload } from "@mui/icons-material";
 import { Card, IconButton, List, ListItem, Stack, Typography } from "@mui/joy";
-import { useParams } from "next/navigation";
+import { useParams, useSearchParams } from "next/navigation";
 import { useEffect, useState } from "react";
 import { toast } from "sonner";
 import ComponentWithLoader from "../ComponentWithLoader";
@@ -19,9 +19,11 @@ import { UIModal, UIModalActionArea } from "../UIModal";
 import { DocumentUploadModal } from "./DocumentUploadModal";
 import { Portal } from "@mui/material";
 import { Lightbox } from "react-modal-image";
+import Link from "next/link";
 
 export const DocComponent = () => {
   const params = useParams();
+  const searchParams = useSearchParams();
   const [filePickerOpen, setFilePickerOpen] = useState(false);
   const [documents, setDocuments] = useState<Documents[]>([]);
   const [loading, setLoading] = useState(true);
@@ -46,7 +48,22 @@ export const DocComponent = () => {
   return (
     <Stack spacing={2}>
       <Stack direction={"row"} justifyContent={"space-between"}>
-        <Typography level="h3">Documents</Typography>
+        <Typography
+          level="h3"
+          startDecorator={
+            <Link
+              href={"/docbox"}
+              style={{
+                alignItems: "center",
+                display: "flex",
+              }}
+            >
+              <ArrowBackIos />
+            </Link>
+          }
+        >
+          {searchParams.get("name") || "Documents"}
+        </Typography>
         <UIButton
           onClick={() => {
             setFilePickerOpen(true);

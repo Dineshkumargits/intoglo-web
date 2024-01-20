@@ -37,7 +37,7 @@ export function DocBoxComponent() {
   return (
     <Stack spacing={2} sx={{}}>
       <Stack direction={"row"} justifyContent={"space-between"}>
-        <Typography level="h3">Documents</Typography>
+        <Typography level="h3">Doc Boxes</Typography>
         <UIButton
           startDecorator={<Add />}
           onClick={() => {
@@ -105,7 +105,10 @@ const DocItem = ({
     });
   };
   return (
-    <Link href={`/doc/${doc.doc_box_id}`} style={{ textDecoration: "none" }}>
+    <Link
+      href={`/doc/${doc.doc_box_id}?name=${doc.name}`}
+      style={{ textDecoration: "none" }}
+    >
       <ListItem sx={{}} onClick={onClick}>
         <Card
           sx={{
