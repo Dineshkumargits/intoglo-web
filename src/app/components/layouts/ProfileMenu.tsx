@@ -19,7 +19,11 @@ export const ProfileMenu = () => {
   const [anchorEl, setAnchorEl] = React.useState(null);
   const open = Boolean(anchorEl);
   const handleClick = (event: any) => {
-    setAnchorEl(event.currentTarget);
+    if (anchorEl) {
+      setAnchorEl(null);
+    } else {
+      setAnchorEl(event.currentTarget);
+    }
   };
   const handleClose = () => {
     setAnchorEl(null);
@@ -73,31 +77,6 @@ export const ProfileMenu = () => {
               onClose={handleClose}
               aria-labelledby="profile-menu-button"
             >
-              <MenuItem
-                onClick={() => {
-                  router.push("/profile");
-                  handleClose();
-                }}
-              >
-                Profile
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  router.push("/preferences");
-                  handleClose();
-                }}
-              >
-                Preferences
-              </MenuItem>
-              <MenuItem
-                onClick={() => {
-                  router.push("/users");
-                  handleClose();
-                }}
-              >
-                Users
-              </MenuItem>
-              <ListDivider />
               <MenuItem
                 onClick={() => {
                   onLogout();
