@@ -16,11 +16,10 @@ export const metadata = {
 export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   return (
-    <Provider>
-      <html lang="en">
-        <body>
-          <Toaster richColors position="top-right" />
-          <ThemeRegistry>
+    <html lang="en">
+      <body>
+        <ThemeRegistry>
+          <Provider>
             <BaseLayout.Root>
               <BaseLayout.Header
                 sx={{
@@ -62,9 +61,9 @@ export default function RootLayout(props: { children: React.ReactNode }) {
                 {children}
               </BaseLayout.Main>
             </BaseLayout.Root>
-          </ThemeRegistry>
-        </body>
-      </html>
-    </Provider>
+          </Provider>
+        </ThemeRegistry>
+      </body>
+    </html>
   );
 }

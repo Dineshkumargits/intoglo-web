@@ -12,13 +12,12 @@ export const metadata = {
 export default function AuthLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   return (
-    <Provider>
-      <html lang="en">
-        <body>
-          <Toaster richColors position="top-right" />
-          <ThemeRegistry>{children}</ThemeRegistry>
-        </body>
-      </html>
-    </Provider>
+    <html lang="en">
+      <body>
+        <ThemeRegistry>
+          <Provider>{children}</Provider>
+        </ThemeRegistry>
+      </body>
+    </html>
   );
 }
