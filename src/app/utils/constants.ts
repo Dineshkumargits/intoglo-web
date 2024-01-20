@@ -4,12 +4,17 @@ export const API_ROUTES = {
   SIGN_IN: host_url + "/api/auth/signin",
   SIGN_OUT: host_url + "/api/auth/signout",
   GET_USER: host_url + "/api/auth/getuser",
+  LIST_DOCS: host_url + "/api/documents/list_doc_box",
+  CREATE_DOC_BOX: host_url + "/api/documents/create_doc_box",
 };
 
 export const APP_ROUTES = {
   SIGN_UP: "/sign-up",
   SIGN_IN: "/sign-in",
   HOME: "/",
+  DOCS: "/docs",
 };
 
 export const APP_NAME = process.env.NEXT_PUBLIC_APPNAME || "";
+
+export const BODY_BACKGROUND = "#f7f7f8";
