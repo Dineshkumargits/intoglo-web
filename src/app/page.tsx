@@ -5,6 +5,7 @@ import Typography from "@mui/joy/Typography";
 import Link from "next/link";
 import { APP_ROUTES } from "./utils/constants";
 import { useUser } from "./lib/customHooks";
+import { RecentActivities } from "./components/RecentActivities";
 
 export default function Home() {
   useUser();
@@ -20,6 +21,7 @@ export default function Home() {
       <Link href={APP_ROUTES.DOCBOX}>
         <Button>View Docs</Button>
       </Link>
+      <RecentActivities />
     </Stack>
   );
 }

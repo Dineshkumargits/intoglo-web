@@ -12,6 +12,7 @@ export const API_ROUTES = {
   UPLOAD_DOCS: host_url + "/api/documents/upload_documents",
   DELETE_DOCUMENT: host_url + "/api/documents/delete_document",
   GET_ALL_CLIENTS: host_url + "/api/get_all_clients",
+  GET_RECENT_ACTIVITIES: host_url + "/api/get_recent_activities",
 };
 
 export const APP_ROUTES = {
