@@ -18,6 +18,7 @@ import { SubmitHandler, useForm } from "react-hook-form";
 import { toast } from "sonner";
 import { saveUserAuthData } from "../../components/storage";
 import { EMAIL_PATTERN } from "../../utils/validations";
+import { useState } from "react";
 
 type FormInputs = {
   first_name: string;
@@ -27,6 +28,7 @@ type FormInputs = {
 };
 
 export function SignUp() {
+  const [loading, setLoading] = useState(false);
   const router = useRouter();
   const {
     register,
@@ -34,6 +36,7 @@ export function SignUp() {
     formState: { errors },
   } = useForm<FormInputs>();
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setLoading(true);
     axios
       .post(API_ROUTES.SIGN_UP, {
         first_name: data.first_name,
@@ -54,6 +57,9 @@ export function SignUp() {
             error?.message ||
             "Something went wrong. Try again"
         );
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
   return (
@@ -149,7 +155,7 @@ export function SignUp() {
                 </FormHelperText>
               )}
             </FormControl>
-            <Button sx={{ mt: 1 }} type="submit">
+            <Button sx={{ mt: 1 }} type="submit" loading={loading}>
               Create account
             </Button>
           </Stack>
