@@ -48,7 +48,13 @@ export const DocComponent = () => {
   };
   return (
     <Stack spacing={2}>
-      <Stack direction={"row"} justifyContent={"space-between"}>
+      <Stack
+        direction={"row"}
+        justifyContent={"space-between"}
+        flexWrap={"wrap"}
+        spacing={2}
+        rowGap={2}
+      >
         <Typography
           level="h3"
           startDecorator={
@@ -149,7 +155,12 @@ const DocumentItem = ({
           cursor: "pointer",
         }}
       >
-        <Stack direction={"row"} justifyContent={"space-between"}>
+        <Stack
+          direction={"row"}
+          justifyContent={"space-between"}
+          flexWrap={"wrap"}
+          rowGap={1}
+        >
           <Stack direction={"row"} spacing={2} alignItems={"center"}>
             <FontAwesomeIcon
               size="2x"

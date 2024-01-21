@@ -51,7 +51,11 @@ export const DocumentUploadModal = (props: Props) => {
     });
   };
   return (
-    <UIModal open={props?.open} onClose={props?.onClose}>
+    <UIModal
+      open={props?.open}
+      onClose={props?.onClose}
+      title={"Upload Documents"}
+    >
       <FilePicker onUpload={onUpload} />
     </UIModal>
   );
