@@ -7,7 +7,7 @@ import { Provider } from "./components/Provider";
 import BaseLayout from "./components/layouts/BaseLayout";
 import { ProfileMenu } from "./components/layouts/ProfileMenu";
 import { APP_NAME, APP_ROUTES, BODY_BACKGROUND } from "./utils/constants";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import { NextSeo } from "next-seo";
 // export const metadata = {
 //   title: "Create Next App",
@@ -17,6 +17,7 @@ import { NextSeo } from "next-seo";
 export default function RootLayout(props: { children: React.ReactNode }) {
   const { children } = props;
   const pathname = usePathname();
+  const router = useRouter();
   return (
     <html lang="en">
       <NextSeo title="IntoDocs" description={"IntoDocs"} />
@@ -41,7 +42,14 @@ export default function RootLayout(props: { children: React.ReactNode }) {
                       gap: 1.5,
                     }}
                   >
-                    <Typography component="h1" fontWeight="xl">
+                    <Typography
+                      component="h1"
+                      fontWeight="xl"
+                      sx={{ cursor: "pointer" }}
+                      onClick={() => {
+                        router.push("/");
+                      }}
+                    >
                       {APP_NAME}
                     </Typography>
                   </Box>
