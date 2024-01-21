@@ -98,6 +98,7 @@ const DocItem = ({
   onClick: () => void;
   refresh: () => void;
 }) => {
+  const { user } = useUser();
   const [editOpen, setEditOpen] = useState(false);
   const [confirmOpen, setConfirmOpen] = useState(false);
   const onDelete = async () => {
@@ -129,27 +130,31 @@ const DocItem = ({
               <Typography>
                 {moment(doc?.createdAt).format("MMM DD, YYYY")}
               </Typography>
-              <IconButton
-                size="sm"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setEditOpen(true);
-                }}
-              >
-                <Edit />
-              </IconButton>
-              <IconButton
-                size="sm"
-                color="danger"
-                onClick={(e) => {
-                  e.stopPropagation();
-                  e.preventDefault();
-                  setConfirmOpen(true);
-                }}
-              >
-                <Delete />
-              </IconButton>
+              {user?.user_role_id == 1 && (
+                <>
+                  <IconButton
+                    size="sm"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setEditOpen(true);
+                    }}
+                  >
+                    <Edit />
+                  </IconButton>
+                  <IconButton
+                    size="sm"
+                    color="danger"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      e.preventDefault();
+                      setConfirmOpen(true);
+                    }}
+                  >
+                    <Delete />
+                  </IconButton>
+                </>
+              )}
             </Stack>
             <EditDocBoxModal
               open={editOpen}
